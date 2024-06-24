@@ -4,4 +4,6 @@ title: Philosophy
 permalink: /Philosophy/
 ---
 
-[Stoicism](/Stoicism/)
+[Hello-World](/Hello-World/)
+
+[Stoicism](/Philosophy/Stoicism/)
