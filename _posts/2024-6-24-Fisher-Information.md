@@ -6,7 +6,9 @@ title: Notes on Fisher Information Matrix and related identities
 The Hessian of the KL divergence is the fisher information matrix
 $$F_\theta = \nabla^2_u \text{D}_\text{KL}(p_\theta || p_u)|_{u=\theta} $$
 
-where $\text{D}_\text{KL}(p_\theta || p_u) = \mathbb E_{x \sim p_\theta} \left[ \log p_\theta(x) - \log {p_u(x)} \right]$
+where 
+$\text{D}_\text{KL}(p_\theta || p_u) = \mathbb E_{x \sim p_\theta} \left[ \log p_\theta(x) - \log {p_u(x)} \right]$
+
 
 $$\begin{align} F_\theta &= \nabla^2_u \text{D}_\text{KL}(p_\theta || p_u)|_{u=\theta} \\ &= \left[ \nabla_u^2 \int (\log p_\theta(x) - \log p_u(x))p_\theta(x) dx \right]_{u=\theta} \\ &= \int \left[ \nabla_u^2(\log p_\theta(x) - \log p_u(x))p_\theta(x) \right]_{u=\theta}dx \\ &= \int - p_\theta(x)(\nabla_\theta^2 \log p_\theta(x)) dx \\ &= \int -p_\theta(x)(\frac{p_\theta(x)\nabla^2_\theta p_\theta(x) - (\nabla_\theta p_\theta(x))(\nabla_\theta p_\theta(x))^\top}{p_\theta(x)^2}) dx \\ &= \int \frac{(\nabla_\theta p_\theta(x))(\nabla_\theta p_\theta(x))^\top}{p_\theta(x)^2} p_\theta(x) dx - \int \nabla^2_\theta p_\theta(x) dx \\ &= \int (\nabla_\theta \log p_\theta(x))(\nabla_\theta \log p_\theta(x))^\top p_\theta(x) dx - \nabla^2_\theta \int p_\theta(x)dx \\ &= \mathbb E_{x \sim p_\theta} \left[ (\nabla_\theta \log p_\theta(x))(\nabla_\theta \log p_\theta(x))^\top\right] \\ &= \text{Cov}_{x\sim p_\theta} (\nabla_\theta \log p_\theta(x)) \end{align}$$
 
