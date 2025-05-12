@@ -122,9 +122,9 @@ To be a valid schedule, it has to obey 2 constaints:
 If we have a valid schedule satisfying the dependences, we can choose to optimize the schedule, for example, maximizing its parallelism by minimizing the maximum time it takes: $$\min_{T, t} \theta(x, n) \text{ s.t. 1 and 2 hold}$$, the schedule can assign the two iteration vectors to the same time stamp, which implies that the two iterations can be scheduled in parallel.
 
 #### Farkas' lemma
-To make the optimization over the constaints more tractable, we can apply farkas lemma:
+To make the optimization over the constaints more tractable, we can apply farkas lemma (as shown in [[7]](#7)):
 
-Let $$P = \{ x \in \mathbb R^n | Ax + b \geq 0 \}$$ be a non-empty convex polyhedron, and $$\phi: P \to \mathbb R$$ an affine function. Then 
+Let $$P = \{ x \in \mathbb R^n : Ax + b \geq 0 \}$$ be a non-empty convex polyhedron, and $$\phi: P \to \mathbb R$$ an affine function. Then 
 
 $$\forall x \in P, \phi(x) \geq 0 \iff \exists \lambda_0 \in \mathbb R, \lambda \in \mathbb R^m, \lambda_0, \lambda \geq 0, \phi(x) = \lambda^T(Ax + b) + \lambda_0$$
 
@@ -232,11 +232,14 @@ Bondhugula, Uday & Hartono, Albert & Ramanujam, J. & Sadayappan, Ponnuswamy. (20
 <a id="6">[6]</a>
 Uday Bondhugula, Aravind Acharya, and Albert Cohen. 2016. The Pluto+ Algorithm: A Practical Approach for Parallelization and Locality Optimization of Affine Loop Nests. ACM Trans. Program. Lang. Syst. 38, 3, Article 12 (May 2016), 32 pages. https://doi.org/10.1145/2896389
 
+<a id="7">[7]</a>
+Christophe Alias. Farkas Lemma made easy. 10th International Workshop on Polyhedral Compilation Techniques (IMPACT 2020), Jan 2020, Bologna, Italy. pp.1-6. ⟨hal-02422033⟩
+
 #### Links
 
-<a id="7">[7]</a>
-Albert Cohen Pliss (2019) Tutorial: https://pliss2019.github.io/albert_cohen_slides.pdf
-
 <a id="8">[8]</a>
-CS 526 Advanced Compiler Construction: https://misailo.web.engr.illinois.edu/courses/526-sp17/lec15.pdf
+Albert Cohen Pliss (2019) Tutorial: [https://pliss2019.github.io/albert_cohen_slides.pdf](https://pliss2019.github.io/albert_cohen_slides.pdf)
+
+<a id="9">[9]</a>
+CS 526 Advanced Compiler Construction: [https://misailo.web.engr.illinois.edu/courses/526-sp17/lec15.pdf](https://misailo.web.engr.illinois.edu/courses/526-sp17/lec15.pdf)
 
