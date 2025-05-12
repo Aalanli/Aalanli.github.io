@@ -13,11 +13,11 @@ Polyhedral techniques represent loop-nests in terms of convex polyhedrons, which
 2. The schedule $$\theta$$
 3. The dependence relation $$\mathcal P$$
 
-`
+```
 for i = 0..N
     for j = 0..M
         C[i] += A[i, j] * b[j]    # S(i, j)
-`
+```
 
 Each statement is abstracted as a named integer tuple, and each specific instantiation of an iteration is represented by a d-dimension integer vector/tuple (where d= the number of loop nests around the statement).
 The set of all iterations is the set of all possible values that the integer vector can take, and is represented by a polyhedron called the iteration domain, $$\mathcal D \subseteq \mathbb Z^n$$. In the example above $$\mathcal D = \{ (i, j) : 0 \leq i < N, 0 \leq j < M \}$$. If there are symbolic constants in the program, we also include them in the iteration domain, eg. $$\mathcal D = \{ (i, j, n, m) : 0 \leq i < N, 0 \leq j < M, 1 \geq n, 1 \geq m \}$$. More generally, we can write the iteration domain as 
@@ -45,19 +45,19 @@ Polyhedral compilation has 3 phases as an optimization pipeline
 
 In polyhedral optimization, the only loops that can be operated on are loops where the lower, upper bounds are affine expressions of constants, upper loop indices, symbolic constants, and all array accesses are also affine expressions of (symbolic) constants and loop indices. 
 
-`
+```
 affineExpr e = e + e | e - e | c * e | floor(e / c)
-`
+```
 Note that `c` is a constant and floor division by a constant is allowed.
 
 This is because many operations we want to perform in the optimization stage become undecidable if general polynomials are allowed. Whereas operations on polyhedra and affine expressions belong to a formalism known as presburger arithmetic that is decidable (with exponential algorithms lol) (TODO: find ref).
 
-`
+```
 for i = 0..N
     C[i] = 0    # S1(i)
     for j = 0..M
         C[i] += A[i, j] * b[j]    # S2(i, j)
-`
+```
 
 More generally, sequences of program statements that are amendable to polyhedral techniques, static control programs, are represented by Generalized Dataflow Graphs (GDGs). $$\mathcal G = (V, E, \mathbf D, \mathbf P)$$, where $$V=\{i : S_i\}$$ is the set of vertices and each vertex is associated with a statement, $$E$$ is the set of edges and $$(i, j) \in E$$ means a dependence between $$S_i$$ and $$S_j$$. $$D_i \in \mathbf D, i \in V$$ is the domain associated with each statement, and $$P_{ij} \in \mathbf P, (i, j) \in E$$ is the dependence polyhedron associated with each dependence.
 
@@ -76,15 +76,15 @@ Since $$\theta(x)$$ is an affine function of its input, it cannot represent quad
 
 In the multi-dimensional version, $$\theta$$ can be interpreted as a 'scattering' function [[3]](#3), which sends iteration instances from one coordinate loop-nest system into another. For example:
 
-`
+```
 for i in 0..N
   for j in 0..M
     S(i, j)
-`
+```
 
 transformed by $$\theta(i, j) = (i+j, j) = (t, q)$$
 
-`
+```
 orginal order
 i
 |678
@@ -97,14 +97,14 @@ t
 | 147
 |025
 .------ q
-`
+```
 
 new loop nest:
-`
+```
 for q in 0..N+M-1
   for t in max(0, q-N+1)..min(q+1, M)
     S(t-q, q)
-`
+```
 
 
 To optimize the over schedules, we must first find a parameterization of it. From what I can find the most general schedule parameterization is in the form $$\theta(x) = Tx + t$$, since we have to obey the affine restriction. (In Bastoul's 2004 paper [[3]](#3) there's a more general parameterization $$\theta(x) = (Tx + t) / d$$, where $$d$$ are symbolic constants, introducing this adds more complexity in the constraints, so I skip for now)
